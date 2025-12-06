@@ -7,7 +7,9 @@ let main args =
     let builder = WebApplication.CreateBuilder(args)
     let app = builder.Build()
 
-    app.MapGet("/", Func<string>(fun () -> "Hello World!")) |> ignore
+    // serve static assets
+    app.UseDefaultFiles() |> ignore
+    app.UseStaticFiles() |> ignore
 
     app.Run()
 

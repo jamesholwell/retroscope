@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>retroscope</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            perspective: 500px;
+            height: 100vh;
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0%;
+            left: 0%;
+            bottom: 0%;
+            right: 0%;
+            background-image: 
+                radial-gradient(1px 1px at 88% 85%, white, transparent),
+                radial-gradient(1px 1px at 70% 20%, white, transparent),
+                radial-gradient(1px 1px at 45% 67%, white, transparent),
+                radial-gradient(1px 1px at 22% 89%, white, transparent),
+                radial-gradient(1px 1px at 69% 32%, white, transparent),
+                radial-gradient(1px 1px at 84% 16%, white, transparent),
+                radial-gradient(1px 1px at 80% 40%, white, transparent),
+                radial-gradient(1px 1px at 32% 58%, white, transparent),
+                radial-gradient(1px 1px at 57% 48%, white, transparent),
+                radial-gradient(1px 1px at 83% 77%, white, transparent),
+                radial-gradient(1px 1px at 88% 41%, white, transparent),
+                radial-gradient(1px 1px at 42% 4%, white, transparent),
+                radial-gradient(1px 1px at 57% 61%, white, transparent),
+                radial-gradient(1px 1px at 7% 10%, white, transparent),
+                radial-gradient(1px 1px at 85% 54%, white, transparent),
+                radial-gradient(1px 1px at 45% 24%, white, transparent),
+                radial-gradient(1px 1px at 53% 100%, white, transparent),
+                radial-gradient(1px 1px at 46% 9%, white, transparent),
+                radial-gradient(1px 1px at 13% 69%, white, transparent),
+                radial-gradient(1px 1px at 60% 7%, white, transparent),
+                radial-gradient(1px 1px at 6% 100%, white, transparent);
+            background-size: 450px 450px;
+            background-repeat: repeat;
+            animation: warp 30s linear infinite;
+            z-index: -1;
+            transform-origin: center center;
+        }
+
+        body::after {
+            background-image: 
+                radial-gradient(1px 1px at 68% 18%, white, transparent),
+                radial-gradient(1px 1px at 83% 19%, white, transparent),
+                radial-gradient(1px 1px at 47% 17%, white, transparent),
+                radial-gradient(1px 1px at 84% 68%, white, transparent),
+                radial-gradient(1px 1px at 80% 99%, white, transparent),
+                radial-gradient(1px 1px at 84% 31%, white, transparent),
+                radial-gradient(1px 1px at 98% 46%, white, transparent),
+                radial-gradient(1px 1px at 36% 70%, white, transparent),
+                radial-gradient(1px 1px at 24% 71%, white, transparent),
+                radial-gradient(1px 1px at 36% 77%, white, transparent),
+                radial-gradient(1px 1px at 74% 65%, white, transparent),
+                radial-gradient(1px 1px at 8% 42%, white, transparent),
+                radial-gradient(1px 1px at 35% 10%, white, transparent),
+                radial-gradient(1px 1px at 89% 0%, white, transparent),
+                radial-gradient(1px 1px at 87% 78%, white, transparent),
+                radial-gradient(1px 1px at 31% 57%, white, transparent),
+                radial-gradient(1px 1px at 15% 38%, white, transparent),
+                radial-gradient(1px 1px at 27% 99%, white, transparent),
+                radial-gradient(1px 1px at 36% 51%, white, transparent),
+                radial-gradient(1px 1px at 7% 82%, white, transparent),
+                radial-gradient(1px 1px at 4% 48%, white, transparent);
+            background-size: 550px 550px;
+            animation: warp 30s linear infinite;
+            animation-delay: 10s;
+            opacity: 0;
+        }
+
+        @keyframes warp {
+            from {
+                transform: scale(1) translateZ(0);
+                opacity: 0;
+            }
+            30% {
+                opacity: 1;
+            }
+            95% {
+                transform: scale(1.5) translateZ(500px);
+            }
+            to {
+                transform: scale(1.5) translateZ(500px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+</body>
+</html>

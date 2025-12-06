@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-server",
+            "program": "${workspaceFolder}/Retroscope.Server/bin/Debug/net10.0/Retroscope.Server.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Retroscope.Server",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        }
+    ]
+}

@@ -14,7 +14,8 @@ module Scope =
             this.Title title |> Async.StartAsTask :> Task
 
         member _.Draw(element : ISvgNode) : Async<unit> = async {
-            do! hub.InvokeAsync("Draw", element.ToSvgString()) |> Async.AwaitTask
+            let svg = "<svg xmlns=\"http://www.w3.org/2000/svg\">" + element.ToSvgString() + "</svg>"
+            do! hub.InvokeAsync("Draw", svg) |> Async.AwaitTask
         }
 
         member this.DrawAsync(element : ISvgNode) : Task =

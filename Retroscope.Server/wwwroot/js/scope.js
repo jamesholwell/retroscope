@@ -36,49 +36,41 @@ connection.on("Title", (message) =>
 connection.on("Clear", () => 
     document.getElementById("canvas").innerHTML = "");
 
-connection.on("Draw", (drawable) => 
-    document.getElementById("canvas").innerHTML += sanitizeSvg(drawable));
-
 const svgParser = new DOMParser();
+const allowedTags = new Set([
+    'svg',
+    'line', 'rect', 'circle', 'ellipse', 'polygon', 'polyline',
+    'path', 'text', 'tspan', 'g', 'defs', 'clipPath', 'mask',
+    'linearGradient', 'radialGradient', 'stop', 'pattern',
+    'image', 'use', 'symbol', 'marker', 'foreignObject'
+]);
 
-function sanitizeSvg(svgString) {
+// excludes event handlers, href and any other potentially dangerous attributes
+const allowedAttributes = new Set([
+    'x', 'y', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'rx', 'ry',
+    'width', 'height', 'd', 'points', 
+    'stroke', 'stroke-width', 'stroke-opacity', 'stroke-linecap', 'stroke-linejoin', 'stroke-dasharray', 'stroke-dashoffset', 
+    'fill', 'fill-opacity', 'fill-rule', 
+    'opacity', 
+    'transform',
+    'text-anchor', 'font-family', 'font-size', 'font-weight', 'font-style', 
+    'marker-start', 'marker-mid', 'marker-end'
+]);
+
+const canvas = document.getElementById("canvas")
+connection.on("Draw", (drawable) => {
+    const doc = svgParser.parseFromString(drawable, 'image/svg+xml');
+    
     // allows only a safe subset of SVG tags and attributes
-    const allowedTags = new Set([
-        'line', 'rect', 'circle', 'ellipse', 'polygon', 'polyline',
-        'path', 'text', 'tspan', 'g', 'defs', 'clipPath', 'mask',
-        'linearGradient', 'radialGradient', 'stop', 'pattern',
-        'image', 'use', 'symbol', 'marker', 'foreignObject'
-    ]);
-
-    // excludes event handlers, href and any other potentially dangerous attributes
-    const allowedAttributes = new Set([
-        'x', 'y', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'rx', 'ry',
-        'width', 'height', 'd', 'points', 
-        'stroke', 'stroke-width', 'stroke-opacity', 'stroke-linecap', 'stroke-linejoin', 'stroke-dasharray', 'stroke-dashoffset', 
-        'fill', 'fill-opacity', 'fill-rule', 
-        'opacity', 
-        'transform',
-        'text-anchor', 'font-family', 'font-size', 'font-weight', 'font-style', 
-        'marker-start', 'marker-mid', 'marker-end'
-    ]);
-
-    const doc = svgParser.parseFromString(svgString, 'text/html');
-    
-    const elements = doc.body.querySelectorAll('*');
-    for (const element of elements) {
-        const tagName = element.tagName.toLowerCase();
+    for (const element of doc.documentElement.querySelectorAll('*')) {
+        if (!allowedTags.has(element.tagName.toLowerCase())) 
+            return;
         
-        if (!allowedTags.has(tagName)) {
-            element.remove();
-            continue;
-        }
-        
-        const attributes = Array.from(element.attributes);
-        for (const attr of attributes)
+        for (const attr of element.attributes)
             if (!allowedAttributes.has(attr.name.toLowerCase())) 
-                element.removeAttribute(attr.name);
+                return;
 
+        const adopted = document.adoptNode(element);
+        canvas.appendChild(adopted);
     }
-    
-    return doc.body.innerHTML;
-}
+});

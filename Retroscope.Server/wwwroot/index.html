@@ -7,13 +7,16 @@
     <style>
         body {
             background-color: black;
-            color: white;
+
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            overflow: hidden;
-            perspective: 500px;
+            color: white;
+
             height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            
+            perspective: 500px;
         }
 
         body::before,
@@ -148,12 +151,28 @@
                 opacity: 0;
             }
         }
+
+        #canvas {
+            width: 100vw;
+            height: 100vh;
+
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            overflow: hidden; 
+        }
     </style>
 </head>
 <body>
     <h1 id="title"></h1>
     <div id="connection-status" onclick="location.reload()" title="Reload Page"></div>
+
+    <svg id="canvas" viewBox="0 0 1024 1024" preserveAspectRatio="xMidYMin meet">
+
+    </svg>
+
     <script src="/js/signalr/dist/browser/signalr.js"></script>
     <script src="/js/scope.js"></script>
+    <script src="/js/zoom.js"></script>
 </body>
 </html>

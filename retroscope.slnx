@@ -1,3 +1,6 @@
 <Solution>
   <Project Path="Retroscope.Server/Retroscope.Server.fsproj" />
+  <Project Path="Retroscope/Retroscope.fsproj" />
+  <Project Path="Samples.FSharp/Samples.FSharp.fsproj" />
+  <Project Path="Samples.CSharp/Samples.CSharp.csproj" />
 </Solution>

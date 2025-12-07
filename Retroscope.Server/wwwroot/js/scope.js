@@ -29,3 +29,7 @@ function updateStatus(status) {
 connection.start()
     .then(() => updateStatus("Connected"))
     .catch(() => updateStatus("Failed to connect"));
+
+connection.on("Title", (message) =>
+    document.getElementById("title").textContent = message);
+

@@ -7,11 +7,21 @@ open Microsoft.Extensions.DependencyInjection
 type IScopeClient =
     abstract member Title : title:string -> Task
 
+    abstract member Draw : drawable:string -> Task
+
+    abstract member Clear : unit -> Task
+
 type ScopeHub() =
     inherit Hub<IScopeClient>()
 
     member this.Title(title : string) =
         this.Clients.All.Title(title)
+
+    member this.Draw(drawable : string) =
+        this.Clients.All.Draw(drawable)
+
+    member this.Clear() =
+        this.Clients.All.Clear()
 
 [<EntryPoint>]
 let main args =

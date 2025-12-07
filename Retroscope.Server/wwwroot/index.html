@@ -114,10 +114,45 @@
 
             opacity: 0.5;
         }
+
+        #connection-status {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            width: auto;
+
+            font-size: 8px;
+            line-height: 10px;
+            text-align: right;
+
+            text-transform: uppercase;
+
+            cursor: pointer;
+
+            margin: 0;
+            padding: 0;
+
+            opacity: 0.5;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #connection-status.connected {
+            animation: fadeOut 2s ease-in-out 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 0.5;
+            }
+            to {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
     <h1 id="title"></h1>
+    <div id="connection-status" onclick="location.reload()" title="Reload Page"></div>
     <script src="/js/signalr/dist/browser/signalr.js"></script>
     <script src="/js/scope.js"></script>
 </body>

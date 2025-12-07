@@ -53,3 +53,6 @@ ehthumbs.db
 Desktop.ini
 .DS_Store
 
+# Container locals
+.devcontainer/dev-certs.crt
+

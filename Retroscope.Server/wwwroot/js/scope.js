@@ -6,7 +6,7 @@ var reconnectionPolicy = [
 ];
 
 var connection = new signalR.HubConnectionBuilder()
-    .withUrl("/hub")
+    .withUrl("/scope")
     .withAutomaticReconnect(reconnectionPolicy)
     .build();
 

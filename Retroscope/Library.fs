@@ -3,6 +3,8 @@ module Scope =
     open System
     open System.Threading.Tasks
     open Microsoft.AspNetCore.SignalR.Client
+    open Microsoft.Extensions.DependencyInjection
+    open System.Text.Json.Serialization
     open SVG
 
     type Scope(hub: HubConnection) =
@@ -13,12 +15,11 @@ module Scope =
         member this.TitleAsync(title: string) : Task =
             this.Title title |> Async.StartAsTask :> Task
 
-        member _.Draw(element : ISvgNode) : Async<unit> = async {
-            let svg = "<svg xmlns=\"http://www.w3.org/2000/svg\">" + element.ToSvgString() + "</svg>"
-            do! hub.InvokeAsync("Draw", svg) |> Async.AwaitTask
+        member _.Draw(element : Element) : Async<unit> = async {
+            do! hub.InvokeAsync("Draw", element) |> Async.AwaitTask
         }
 
-        member this.DrawAsync(element : ISvgNode) : Task =
+        member this.DrawAsync(element : Element) : Task =
             this.Draw element |> Async.StartAsTask :> Task
 
         member _.Clear() : Async<unit> = async {
@@ -34,11 +35,14 @@ module Scope =
         if not wasUriParsed then
             failwithf "The provided base URI '%s' is not a valid absolute URI." baseUri
 
-        let hubUri = new Uri(parsedBaseUri, "/hub")
+        let hubUri = new Uri(parsedBaseUri, "/probe")
 
         let hub = 
             HubConnectionBuilder()
                 .WithUrl(hubUri.ToString())
+                .AddJsonProtocol(fun options ->
+                    options.PayloadSerializerOptions.Converters.Add(JsonFSharpConverter())
+                )
                 .Build()
 
         do! hub.StartAsync() |> Async.AwaitTask
